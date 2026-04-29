@@ -26,6 +26,7 @@
 
 CC = msp430-gcc
 OBJCOPY = msp430-objcopy
+MSP430_SIZE = msp430-size
 MSPDEBUG = mspdebug
 
 CFLAGS += -mmcu=$(MCU_MODEL) -DMCU_MSP430=1 -g -Wall
@@ -40,10 +41,10 @@ OUTDIRDOS = $(subst /cygdrive/c,C:,$(OUTDIR))
 
 ifeq ($(BSLPROXY),)
 # use regular upload
-BSL ?= python $(MOS)/make/scripts/ubsl.py
+BSL ?= python3 $(MOS)/make/scripts/ubsl.py
 else
 # use networked upload
-BSL ?= python $(MOS)/make/scripts/netbsl.py
+BSL ?= python3 $(MOS)/make/scripts/netbsl.py
 endif
 
 # this option is needed for testbed device
@@ -137,7 +138,7 @@ mspsim: build
 	$(JAVA) -jar $(MSPSIM) -platform=sky $(OUTDIR)/$(APPMOD).elf
 
 size: build
-	$(_QUIET) msp430-size $(OUTDIR)/$(APPMOD).elf
+	$(_QUIET) $(MSP430_SIZE) $(OUTDIR)/$(APPMOD).elf
 
 # FIXME: Setup is OS agnostic, assumes linux (Ubuntu, debian)
 setup: setupbase_about setup-msp430_about yesno setupbase setup-msp430
@@ -146,7 +147,16 @@ setup: setupbase_about setup-msp430_about yesno setupbase setup-msp430
 	$(Print) ""
 
 setup-msp430_about:
+ifeq ($(UNAME),Darwin)
+	@echo ">>> brew install tgtakaoka/mspgcc/gcc-msp430 tgtakaoka/mspgcc/binutils-msp430 tgtakaoka/mspgcc/libc-msp430 mspdebug && pip3 install pyserial"
+else
 	@echo ">>> sudo apt-get install gcc-msp430 binutils-msp430 msp430-libc msp430mcu"
+endif
 
 setup-msp430:
+ifeq ($(UNAME),Darwin)
+	brew install tgtakaoka/mspgcc/gcc-msp430 tgtakaoka/mspgcc/binutils-msp430 tgtakaoka/mspgcc/libc-msp430 mspdebug
+	pip3 install --break-system-packages pyserial
+else
 	sudo apt-get install gcc-msp430 binutils-msp430 msp430-libc msp430mcu
+endif

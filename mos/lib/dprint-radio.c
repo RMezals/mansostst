@@ -30,7 +30,7 @@
 // This is just 6 byte overhead (code memory) by default,
 // and significant savings if radio is not used.
 //
-void printInit(void)
+__attribute__((weak)) void printInit(void)
 {
     extern void printInitReal(void);
     printInitReal();

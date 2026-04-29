@@ -32,8 +32,7 @@ LDFLAGS += -lpthread
 include $(MAKEFILE_GCC)
 
 ifeq ($(UNAME),Darwin)
-CFLAGS += -m32
-LDFLAGS += -L/Developer/SDKs/MacOSX10.6.sdk/usr/lib -undefined dynamic_lookup -arch i386
+# Apple Silicon (arm64) and modern macOS - native 64-bit compilation
 endif
 
 ifeq ($(SHORT_UNAME),MINGW3)
@@ -95,8 +94,16 @@ setup: setupbase_about setup-pc_about yesno setupbase setup-pc
 	$(Print) ""
 
 setup-pc_about:
+ifeq ($(UNAME),Darwin)
+	@echo ">>> brew install gcc"
+else
 	@echo ">>> sudo apt install build-essential gcc"
+endif
 
 setup-pc:
+ifeq ($(UNAME),Darwin)
+	brew install gcc
+else
 	sudo apt install build-essential gcc
+endif
 

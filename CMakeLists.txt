@@ -1,0 +1,709 @@
+cmake_minimum_required(VERSION 4.2)
+project(MansOS)
+
+set(CMAKE_CXX_STANDARD 14)
+
+include_directories(apps/advanced/Calendar)
+include_directories(apps/advanced/LPL)
+include_directories(apps/advanced/Sad2012-n)
+include_directories(apps/advanced/Sad2012-n/06-jun/datalogger)
+include_directories(apps/advanced/Sad2012-n/06-jun/final)
+include_directories(apps/advanced/Sad2013)
+include_directories(apps/advanced/Sarauj)
+include_directories(apps/advanced/TestBed2Demo/Protocol)
+include_directories(apps/seal/TestCache)
+include_directories(apps/seal/TestSync)
+include_directories(apps/tests/PDRTest)
+include_directories(mos/arch)
+include_directories(mos/arch/avr)
+include_directories(mos/arch/avr/threads)
+include_directories(mos/arch/msp430)
+include_directories(mos/arch/msp430/threads)
+include_directories(mos/arch/pc)
+include_directories(mos/chips)
+include_directories(mos/chips/ad5258)
+include_directories(mos/chips/ads1115)
+include_directories(mos/chips/ads8328)
+include_directories(mos/chips/ads8638)
+include_directories(mos/chips/adxl345)
+include_directories(mos/chips/amb8420)
+include_directories(mos/chips/apds9300)
+include_directories(mos/chips/at25df)
+include_directories(mos/chips/atmega)
+include_directories(mos/chips/cc1101)
+include_directories(mos/chips/cc2420)
+include_directories(mos/chips/dac7718)
+include_directories(mos/chips/ds18b20)
+include_directories(mos/chips/ds2401)
+include_directories(mos/chips/ds2411)
+include_directories(mos/chips/hd4478)
+include_directories(mos/chips/isl29003)
+include_directories(mos/chips/m25pxx)
+include_directories(mos/chips/mrf24j40)
+include_directories(mos/chips/msp430)
+include_directories(mos/chips/nrf24)
+include_directories(mos/chips/rtc/isl1219)
+include_directories(mos/chips/sdcard)
+include_directories(mos/chips/sht11)
+include_directories(mos/chips/tmp102)
+include_directories(mos/fatfs)
+include_directories(mos/fs)
+include_directories(mos/fs/block)
+include_directories(mos/fs/dev)
+include_directories(mos/hil)
+include_directories(mos/include)
+include_directories(mos/kernel)
+include_directories(mos/kernel/protothreads)
+include_directories(mos/kernel/threads)
+include_directories(mos/lib)
+include_directories(mos/lib/codec)
+include_directories(mos/lib/nmea)
+include_directories(mos/lib/processing)
+include_directories(mos/net)
+include_directories(mos/platforms/atmega)
+include_directories(mos/platforms/em)
+include_directories(mos/platforms/fr)
+include_directories(mos/platforms/launchpad)
+include_directories(mos/platforms/pc)
+include_directories(mos/platforms/phaser)
+include_directories(mos/platforms/sadmote)
+include_directories(mos/platforms/santa)
+include_directories(mos/platforms/sm3)
+include_directories(mos/platforms/telosb)
+include_directories(mos/platforms/testbed)
+include_directories(mos/platforms/testbed2)
+include_directories(mos/platforms/tinymcu)
+include_directories(mos/platforms/xm1000)
+include_directories(mos/platforms/z1)
+include_directories(mos/smp)
+include_directories(mos/wmp)
+include_directories(tools/parser/ext-test)
+include_directories(tools/shell)
+
+add_executable(MansOS
+        apps/advanced/Accel3DTest/main.c
+        apps/advanced/AccelDice/main.c
+        apps/advanced/AccelGather/Dumper/main.c
+        apps/advanced/AccelGather/main.c
+        apps/advanced/AccelMusic/main.c
+        apps/advanced/AccelTrack/main.c
+        apps/advanced/BlinkGlow/main.c
+        apps/advanced/Bootloader/main.c
+        apps/advanced/Calendar/main.c
+        apps/advanced/Calendar/vd.c
+        apps/advanced/Calendar/vd_names.h
+        apps/advanced/CarModeDetect/Bayes/main.c
+        apps/advanced/CarModeDetect/Bayes/simple.c
+        apps/advanced/CarModeDetect/Detect/bayes.c
+        apps/advanced/CarModeDetect/Detect/main.c
+        apps/advanced/CarModeDetect/Record/main.c
+        apps/advanced/GPSParsing/gpstest.c
+        apps/advanced/GPSParsing/main.c
+        apps/advanced/GpsProxy/main.c
+        apps/advanced/IMU/main.c
+        apps/advanced/LPL/lpl.h
+        apps/advanced/LPL/main.c
+        apps/advanced/PrintfStackDepth/main.c
+        apps/advanced/RamExec/main.c
+        apps/advanced/Sad2012-n/06-jun/datalogger/datapacket.h
+        apps/advanced/Sad2012-n/06-jun/datalogger/main.c
+        apps/advanced/Sad2012-n/06-jun/final/datapacket.h
+        apps/advanced/Sad2012-n/06-jun/final/main.c
+        apps/advanced/Sad2012-n/06-jun/flashReader/main.c
+        apps/advanced/Sad2012-n/cleanFlash/main.c
+        apps/advanced/Sad2012-n/datalogger/main.c
+        apps/advanced/Sad2012-n/flashReader/main.c
+        apps/advanced/Sad2012-n/mote/main-new.c
+        apps/advanced/Sad2012-n/mote/main.c
+        apps/advanced/Sad2012-n/sensors-test/main.c
+        apps/advanced/Sad2012-n/common.h
+        apps/advanced/Sad2012-n/data_packet.h
+        apps/advanced/Sad2013/cleanFlash/main.c
+        apps/advanced/Sad2013/datalogger/main.c
+        apps/advanced/Sad2013/flashReader/main.c
+        apps/advanced/Sad2013/common.h
+        apps/advanced/Sad2013/data_packet.h
+        apps/advanced/Sarauj/main.c
+        apps/advanced/Sarauj/vd_names.h
+        apps/advanced/SealBaseStation/main.c
+        apps/advanced/TestBed2Demo/Protocol/main.c
+        apps/advanced/TestBed2Demo/Protocol/protocol.h
+        apps/advanced/TestBed2Demo/TinyMcu/main.c
+        apps/advanced/TimerSense/main.c
+        apps/demo/Blink/main.c
+        apps/demo/BlinkCounter/main.c
+        apps/demo/BlinkPrecise/main.c
+        apps/demo/BlinkRadio/main.c
+        apps/demo/BlinkSensor/main.c
+        apps/demo/PD6/main.c
+        apps/demo/PrintADC/main.c
+        apps/demo/PrintCounter/main.c
+        apps/demo/PrintEcho/main.c
+        apps/demo/PrintRadio/main.c
+        apps/demo/PrintSensors/main.c
+        apps/Empty/main.c
+        apps/seal/TestCache/main.c
+        apps/seal/TestCache/schedtest.h
+        apps/seal/TestSync/main.c
+        apps/seal/TestSync/schedtest.h
+        apps/tests/AccelTest/main.c
+        apps/tests/AccelTestZolertiaZ1/main.c
+        apps/tests/AdaptiveRate/main.c
+        apps/tests/AdcTest/main.c
+        apps/tests/AdcToUart/main.c
+        apps/tests/Ads111xTest/main.c
+        apps/tests/ADXL345Test/main.c
+        apps/tests/AlarmTest/main.c
+        apps/tests/ApdsTest/main.c
+        apps/tests/AssertTest/main.c
+        apps/tests/BeeperTest/main.c
+        apps/tests/BlinkTest/main.c
+        apps/tests/DataProcessingTests/AverageTest/main.c
+        apps/tests/DataProcessingTests/FilterTest/main.c
+        apps/tests/DataProcessingTests/SqrtTest/main.c
+        apps/tests/DataProcessingTests/StdevTest/main.c
+        apps/tests/DcoRecalibrationTest/main.c
+        apps/tests/ExpThreadTests/0-Deadlock/main.c
+        apps/tests/ExpThreadTests/0-Lockup/main.c
+        apps/tests/ExpThreadTests/0-Overflow-Kernel/main.c
+        apps/tests/ExpThreadTests/0-Overflow-User/main.c
+        apps/tests/ExpThreadTests/1a-Blink-mdelay/main.c
+        apps/tests/ExpThreadTests/1b-Blink-msleep/main.c
+        apps/tests/ExpThreadTests/1c-Blink-Multi/main.c
+        apps/tests/ExpThreadTests/1d-Blink-Multi-Prio/main.c
+        apps/tests/ExpThreadTests/2-Alarms/main.c
+        apps/tests/ExpThreadTests/3-Locking/main.c
+        apps/tests/ExpThreadTests/3-Locking-Multi/main.c
+        apps/tests/ExpThreadTests/4-Exit/main.c
+        apps/tests/ExpThreadTests/5-Radio/main.c
+        apps/tests/ExpThreadTests/6-MAC/main.c
+        apps/tests/ExpThreadTests/7-Sockets/main.c
+        apps/tests/ExtFlashTest/main.c
+        apps/tests/FatFSTests/01-Format/main.c
+        apps/tests/FatFSTests/02-Open/main.c
+        apps/tests/FatFSTests/03-ReadWrite/main.c
+        apps/tests/FatFSTests/04-CreateRemove/main.c
+        apps/tests/FatFSTests/05-LongReadWrite/main.c
+        apps/tests/FatFSTests/06-FilePrint/main.c
+        apps/tests/FatFSTests/07-FileSeek/main.c
+        apps/tests/FSTest/main.c
+        apps/tests/GPSParseTest/main.c
+        apps/tests/HumidityTest/main.c
+        apps/tests/I2cTest/main.c
+        apps/tests/IntFlashTest/main.c
+        apps/tests/IslLightSensorTest/main.c
+        apps/tests/LinkTest/main.c
+        apps/tests/ListTest/main.c
+        apps/tests/Multihop/main.c
+        apps/tests/Null/main.c
+        apps/tests/PDRTest/bs/bs.c
+        apps/tests/PDRTest/flashReader/main.c
+        apps/tests/PDRTest/common.h
+        apps/tests/PDRTest/main.c
+        apps/tests/ProtoThreadTests/01-PTYield/main.c
+        apps/tests/ProtoThreadTests/02-PTBlink/main.c
+        apps/tests/ProtoThreadTests/03-PTRadio/main.c
+        apps/tests/RadioRecvTest/main.c
+        apps/tests/RadioSendTest/main.c
+        apps/tests/RadioWorSendTest/main.c
+        apps/tests/RtcTest/main.c
+        apps/tests/SdCardBlockTest/main.c
+        apps/tests/SerialBridge/main.c
+        apps/tests/SerialPipe/main.c
+        apps/tests/SerialRecvPacketTest/main.c
+        apps/tests/SerialRecvTest/main.c
+        apps/tests/SharingTest/main.c
+        apps/tests/SharingTest/sender.c
+        apps/tests/SleepTest/sm3/main.c
+        apps/tests/SleepTest/main.c
+        apps/tests/SmpTest/DemoBlueLed/main.c
+        apps/tests/SmpTest/DemoRedLed/main.c
+        apps/tests/SnumTest/main.c
+        apps/tests/SoftSerialTest/main.c
+        apps/tests/StackTest/main.c
+        apps/tests/SyncTest/main.c
+        apps/tests/TimingTest/main.c
+        apps/tests/TinyOSEncapsuleTest/main.c
+        apps/tests/TMP102Test/main.c
+        apps/tests/UserButtonTest/main.c
+        apps/tests/WatchdogTest/main.c
+        apps/tests/WMPTest/main.c
+        mos/arch/avr/threads/context_switch.h
+        mos/arch/avr/arch_datatypes.h
+        mos/arch/avr/arch_mem.h
+        mos/arch/avr/beeper_hal.h
+        mos/arch/avr/eeprom_hal.h
+        mos/arch/avr/extflash_hal.h
+        mos/arch/avr/gpio_hal.h
+        mos/arch/avr/humidity_hal.h
+        mos/arch/avr/i2c_hal.h
+        mos/arch/avr/intflash_hal.h
+        mos/arch/avr/leds_hal.h
+        mos/arch/avr/light_hal.h
+        mos/arch/avr/net_hal.c
+        mos/arch/avr/udelay_hal.h
+        mos/arch/avr/watchdog.c
+        mos/arch/avr/watchdog_hal.h
+        mos/arch/msp430/threads/context_switch.h
+        mos/arch/msp430/arch_datatypes.h
+        mos/arch/msp430/arch_mem.h
+        mos/arch/msp430/beeper_hal.h
+        mos/arch/msp430/eeprom_hal.c
+        mos/arch/msp430/eeprom_hal.h
+        mos/arch/msp430/extflash_hal.h
+        mos/arch/msp430/gpio_hal.h
+        mos/arch/msp430/humidity_hal.h
+        mos/arch/msp430/i2c_hal.h
+        mos/arch/msp430/intflash_hal.h
+        mos/arch/msp430/light_hal.h
+        mos/arch/msp430/net_hal.c
+        mos/arch/msp430/serial_soft-launchpad.c
+        mos/arch/msp430/serial_soft.c
+        mos/arch/msp430/serial_soft.h
+        mos/arch/msp430/udelay_hal.h
+        mos/arch/msp430/user_button.c
+        mos/arch/msp430/user_button.h
+        mos/arch/msp430/watchdog.c
+        mos/arch/msp430/watchdog_hal.h
+        mos/arch/pc/adc_hal.c
+        mos/arch/pc/adc_hal.h
+        mos/arch/pc/alarms_hal.c
+        mos/arch/pc/arch_datatypes.h
+        mos/arch/pc/arch_mem.h
+        mos/arch/pc/beeper_hal.h
+        mos/arch/pc/eeprom_hal.c
+        mos/arch/pc/eeprom_hal.h
+        mos/arch/pc/extflash_hal.c
+        mos/arch/pc/extflash_hal.h
+        mos/arch/pc/gpio_hal.h
+        mos/arch/pc/humidity_hal.h
+        mos/arch/pc/i2c_hal.h
+        mos/arch/pc/intflash_hal.h
+        mos/arch/pc/ints_hal.h
+        mos/arch/pc/leds_hal.c
+        mos/arch/pc/leds_hal.h
+        mos/arch/pc/light_hal.h
+        mos/arch/pc/net_hal.c
+        mos/arch/pc/radio_hal.c
+        mos/arch/pc/radio_hal.h
+        mos/arch/pc/sdcard_hal.c
+        mos/arch/pc/sem_hal.c
+        mos/arch/pc/sem_hal.h
+        mos/arch/pc/serial_soft.h
+        mos/arch/pc/timers_hal.h
+        mos/arch/pc/udelay_hal.h
+        mos/arch/pc/usart_hal.c
+        mos/arch/pc/watchdog.c
+        mos/arch/pc/watchdog_hal.h
+        mos/arch/accel_hal.h
+        mos/arch/null_spi.h
+        mos/arch/radio_hal.h
+        mos/arch/snum_hal.h
+        mos/chips/ad5258/ad5258.c
+        mos/chips/ad5258/ad5258.h
+        mos/chips/ads1115/ads1115.c
+        mos/chips/ads1115/ads1115.h
+        mos/chips/ads8328/ads8328.c
+        mos/chips/ads8328/ads8328.h
+        mos/chips/ads8638/ads8638.c
+        mos/chips/ads8638/ads8638.h
+        mos/chips/adxl345/adxl345.c
+        mos/chips/adxl345/adxl345.h
+        mos/chips/amb8420/amb8420.c
+        mos/chips/amb8420/amb8420.h
+        mos/chips/apds9300/apds9300.c
+        mos/chips/apds9300/apds9300.h
+        mos/chips/at25df/at25df.c
+        mos/chips/at25df/at25df.h
+        mos/chips/atmega/atmega_2wire.c
+        mos/chips/atmega/atmega_2wire.h
+        mos/chips/atmega/atmega_adc.h
+        mos/chips/atmega/atmega_int.h
+        mos/chips/atmega/atmega_timers.h
+        mos/chips/atmega/atmega_usart.c
+        mos/chips/atmega/atmega_usart.h
+        mos/chips/cc1101/cc1101.c
+        mos/chips/cc1101/cc1101.h
+        mos/chips/cc2420/cc2420.c
+        mos/chips/cc2420/cc2420.h
+        mos/chips/cc2420/cc2420_const.h
+        mos/chips/cc2420/cc2420_spi.h
+        mos/chips/dac7718/dac7718.c
+        mos/chips/dac7718/dac7718.h
+        mos/chips/ds18b20/ds18b20.c
+        mos/chips/ds18b20/ds18b20.h
+        mos/chips/ds2401/ds2401.c
+        mos/chips/ds2401/ds2401.h
+        mos/chips/ds2411/ds2411.c
+        mos/chips/ds2411/ds2411.h
+        mos/chips/hd4478/hd4478.c
+        mos/chips/hd4478/hd4478.h
+        mos/chips/isl29003/isl29003.c
+        mos/chips/isl29003/isl29003.h
+        mos/chips/m25pxx/m25pxx.c
+        mos/chips/m25pxx/m25pxx.h
+        mos/chips/mrf24j40/mrf24j40.c
+        mos/chips/mrf24j40/mrf24j40.h
+        mos/chips/mrf24j40/mrf24j40_const.h
+        mos/chips/msp430/msp430_adc.h
+        mos/chips/msp430/msp430_adc10.h
+        mos/chips/msp430/msp430_clock.h
+        mos/chips/msp430/msp430_flash.c
+        mos/chips/msp430/msp430_flash.h
+        mos/chips/msp430/msp430_int.h
+        mos/chips/msp430/msp430_timers.h
+        mos/chips/msp430/msp430_usart.c
+        mos/chips/msp430/msp430_usart.h
+        mos/chips/msp430/msp430_usart_spi.c
+        mos/chips/msp430/msp430_usart_spi.h
+        mos/chips/msp430/msp430_usci.h
+        mos/chips/msp430/msp430_usci_i2c.c
+        mos/chips/msp430/msp430_usci_spi.c
+        mos/chips/msp430/msp430_usci_uart.c
+        mos/chips/msp430/msp430fr57xx_clock.c
+        mos/chips/msp430/msp430fr57xx_usci.h
+        mos/chips/msp430/msp430fr57xx_usci_i2c.c
+        mos/chips/msp430/msp430fr57xx_usci_spi.c
+        mos/chips/msp430/msp430fr57xx_usci_uart.c
+        mos/chips/msp430/msp430x1xx_clock.c
+        mos/chips/msp430/msp430x2xx_clock.c
+        mos/chips/msp430/msp430x5xx_clock.c
+        mos/chips/nrf24/nrf24_adc.h
+        mos/chips/nrf24/nrf24_timers.c
+        mos/chips/nrf24/nrf24_timers.h
+        mos/chips/nrf24/reg24le1.h
+        mos/chips/rtc/isl1219/isl1219.c
+        mos/chips/rtc/isl1219/isl1219.h
+        mos/chips/sdcard/sdcard.c
+        mos/chips/sdcard/sdcard.h
+        mos/chips/sdcard/sdcard_const.h
+        mos/chips/sht11/sht11.c
+        mos/chips/sht11/sht11.h
+        mos/chips/sht11/sht11_conv.c
+        mos/chips/sht11/sht11_conv.h
+        mos/chips/tmp102/tmp102.c
+        mos/chips/tmp102/tmp102.h
+        mos/chips/trm433.h
+        mos/fatfs/fatfs.c
+        mos/fatfs/fatfs.h
+        mos/fatfs/posix-file.h
+        mos/fatfs/posix-stdio.c
+        mos/fatfs/posix-stdio.h
+        mos/fatfs/structures.h
+        mos/fs/block/alloc.c
+        mos/fs/block/alloc.h
+        mos/fs/block/block.c
+        mos/fs/block/common.h
+        mos/fs/block/flash_access.h
+        mos/fs/block/init.h
+        mos/fs/block/meta.c
+        mos/fs/block/meta.h
+        mos/fs/dev/dev.c
+        mos/fs/dev/dev.h
+        mos/fs/dev/devices.h
+        mos/fs/dev/init.h
+        mos/fs/dev/leds.c
+        mos/fs/dev/leds.h
+        mos/fs/dev/null.c
+        mos/fs/dev/null.h
+        mos/fs/common.h
+        mos/fs/core.c
+        mos/fs/init.h
+        mos/fs/prefix.c
+        mos/fs/prefix.h
+        mos/fs/subsystems.h
+        mos/fs/types.h
+        mos/hil/adc.c
+        mos/hil/atomic.h
+        mos/hil/busywait.h
+        mos/hil/dco.c
+        mos/hil/errors.c
+        mos/hil/flash_stream.c
+        mos/hil/i2c_soft.c
+        mos/hil/leds.c
+        mos/hil/mem.c
+        mos/hil/mem.h
+        mos/hil/onewire.h
+        mos/hil/random.c
+        mos/hil/sdi12.h
+        mos/hil/sdstream.c
+        mos/hil/serial.c
+        mos/hil/spi.c
+        mos/hil/spi_hw.h
+        mos/hil/spi_soft.c
+        mos/hil/spi_soft.h
+        mos/include/accel.h
+        mos/include/adc.h
+        mos/include/alarms.h
+        mos/include/analog.h
+        mos/include/assert.h
+        mos/include/beeper.h
+        mos/include/codec.h
+        mos/include/defines.h
+        mos/include/defines_gcc.h
+        mos/include/defines_iar.h
+        mos/include/defines_sdcc.h
+        mos/include/delay.h
+        mos/include/digital.h
+        mos/include/dynamic_memory.h
+        mos/include/eeprom.h
+        mos/include/errors.h
+        mos/include/extflash.h
+        mos/include/file.h
+        mos/include/flash_stream.h
+        mos/include/fs.h
+        mos/include/humidity.h
+        mos/include/i2c.h
+        mos/include/i2c_soft.h
+        mos/include/i2c_types.h
+        mos/include/intflash.h
+        mos/include/leds.h
+        mos/include/light.h
+        mos/include/mutex.h
+        mos/include/print.h
+        mos/include/radio.h
+        mos/include/random.h
+        mos/include/sdstream.h
+        mos/include/serial.h
+        mos/include/serial_number.h
+        mos/include/sleep.h
+        mos/include/spi.h
+        mos/include/stdmansos.h
+        mos/include/stdtypes.h
+        mos/include/timing.h
+        mos/include/trace.h
+        mos/include/utils.h
+        mos/include/watchdog.h
+        mos/kernel/nothreads/sleep.c
+        mos/kernel/nothreads/timing.c
+        mos/kernel/protothreads/autostart.c
+        mos/kernel/protothreads/autostart.h
+        mos/kernel/protothreads/etimer.c
+        mos/kernel/protothreads/etimer.h
+        mos/kernel/protothreads/lc-addrlabels.h
+        mos/kernel/protothreads/lc-switch.h
+        mos/kernel/protothreads/lc.h
+        mos/kernel/protothreads/process.c
+        mos/kernel/protothreads/process.h
+        mos/kernel/protothreads/protosched.c
+        mos/kernel/protothreads/protosched.h
+        mos/kernel/protothreads/pt-sem.h
+        mos/kernel/protothreads/pt.h
+        mos/kernel/protothreads/radio-process.h
+        mos/kernel/protothreads/radio.c
+        mos/kernel/protothreads/timer.c
+        mos/kernel/protothreads/timer.h
+        mos/kernel/threads/main.c
+        mos/kernel/threads/mutex.c
+        mos/kernel/threads/radio.c
+        mos/kernel/threads/radio.h
+        mos/kernel/threads/threads.c
+        mos/kernel/threads/threads.h
+        mos/kernel/threads/timing.c
+        mos/kernel/alarms.c
+        mos/kernel/alarms_internal.h
+        mos/kernel/boot.c
+        mos/kernel/boot.h
+        mos/kernel/kernelmain.c
+        mos/kernel/reprogramming.c
+        mos/kernel/reprogramming.h
+        mos/kernel/sleep.c
+        mos/kernel/sleep_internal.h
+        mos/kernel/stack.h
+        mos/lib/codec/crc.c
+        mos/lib/codec/crc.h
+        mos/lib/codec/framer.c
+        mos/lib/codec/framer.h
+        mos/lib/codec/hamming.h
+        mos/lib/nmea/nmea.c
+        mos/lib/nmea/nmea.h
+        mos/lib/nmea/nmea_stream.c
+        mos/lib/nmea/nmea_stream.h
+        mos/lib/nmea/nmea_types.h
+        mos/lib/processing/average.c
+        mos/lib/processing/average.h
+        mos/lib/processing/cache.c
+        mos/lib/processing/cache.h
+        mos/lib/processing/filter.c
+        mos/lib/processing/filter.h
+        mos/lib/processing/stdev.c
+        mos/lib/processing/stdev.h
+        mos/lib/activemsg.c
+        mos/lib/activemsg.h
+        mos/lib/algo.c
+        mos/lib/algo.h
+        mos/lib/assert.c
+        mos/lib/assert_internal.h
+        mos/lib/buffer.c
+        mos/lib/buffer.h
+        mos/lib/byteorder.h
+        mos/lib/db_framework.h
+        mos/lib/dprint-radio.c
+        mos/lib/dprint-serial.c
+        mos/lib/dprint.c
+        mos/lib/dprint.h
+        mos/lib/energy.c
+        mos/lib/energy.h
+        mos/lib/hash.c
+        mos/lib/hash.h
+        mos/lib/list.h
+        mos/lib/msg_framework.h
+        mos/lib/pgmspace.h
+        mos/lib/queue.c
+        mos/lib/queue.h
+        mos/lib/rbuffer.c
+        mos/lib/rbuffer.h
+        mos/lib/serialCommunication.c
+        mos/lib/serialCommunication.h
+        mos/lib/stream_stat.h
+        mos/lib/tosmsg.c
+        mos/lib/tosmsg.h
+        mos/lib/usart_packet.c
+        mos/net/mac/csma-ack.c
+        mos/net/mac/csma.c
+        mos/net/mac/null.c
+        mos/net/mac/sad.c
+        mos/net/routing/dv-bs.c
+        mos/net/routing/dv.c
+        mos/net/routing/sad-bs-single.c
+        mos/net/routing/sad-bs.c
+        mos/net/routing/sad-coll.c
+        mos/net/routing/sad-fwd.c
+        mos/net/routing/sad-mote-single.c
+        mos/net/routing/sad-mote.c
+        mos/net/address.h
+        mos/net/mac.c
+        mos/net/mac.h
+        mos/net/net_internal.h
+        mos/net/net_queue.c
+        mos/net/net_queue.h
+        mos/net/net_stats.c
+        mos/net/net_stats.h
+        mos/net/networking.c
+        mos/net/networking.h
+        mos/net/nonet.c
+        mos/net/radio_packet_buffer.h
+        mos/net/routing.h
+        mos/net/seal_networking.c
+        mos/net/seal_networking.h
+        mos/net/socket.c
+        mos/net/socket.h
+        mos/net/timesync.c
+        mos/net/timesync.h
+        mos/platforms/atmega/amb8420_pins.h
+        mos/platforms/atmega/ledslist.h
+        mos/platforms/atmega/platform.c
+        mos/platforms/atmega/platform.h
+        mos/platforms/atmega/platform_radio.h
+        mos/platforms/em/flash.h
+        mos/platforms/em/ledslist.h
+        mos/platforms/em/platform.c
+        mos/platforms/em/platform.h
+        mos/platforms/fr/flash.h
+        mos/platforms/fr/ledslist.h
+        mos/platforms/fr/platform.c
+        mos/platforms/fr/platform.h
+        mos/platforms/launchpad/flash.h
+        mos/platforms/launchpad/ledslist.h
+        mos/platforms/launchpad/platform.c
+        mos/platforms/launchpad/platform.h
+        mos/platforms/pc/ledslist.h
+        mos/platforms/pc/platform.c
+        mos/platforms/pc/platform.h
+        mos/platforms/pc/platform_radio.h
+        mos/platforms/phaser/cc2420_pins.h
+        mos/platforms/phaser/flash.h
+        mos/platforms/phaser/ledslist.h
+        mos/platforms/phaser/m25pxx_pins.h
+        mos/platforms/phaser/phaser_hw.h
+        mos/platforms/phaser/platform.c
+        mos/platforms/phaser/platform.h
+        mos/platforms/phaser/platform_radio.h
+        mos/platforms/sadmote/at25df_pins.h
+        mos/platforms/sadmote/flash.h
+        mos/platforms/sadmote/ledslist.h
+        mos/platforms/sadmote/mrf24j40_pins.h
+        mos/platforms/sadmote/platform.c
+        mos/platforms/sadmote/platform.h
+        mos/platforms/sadmote/platform_radio.h
+        mos/platforms/sadmote/sht_pins.h
+        mos/platforms/santa/cc2420_pins.h
+        mos/platforms/santa/flash.h
+        mos/platforms/santa/hd4478_pins.h
+        mos/platforms/santa/ledslist.h
+        mos/platforms/santa/m25pxx_pins.h
+        mos/platforms/santa/platform.c
+        mos/platforms/santa/platform.h
+        mos/platforms/santa/platform_radio.h
+        mos/platforms/santa/santa_hw.h
+        mos/platforms/santa/sdcard_pins.h
+        mos/platforms/santa/sht_pins.h
+        mos/platforms/sm3/amb8420_pins.h
+        mos/platforms/sm3/flash.h
+        mos/platforms/sm3/ledslist.h
+        mos/platforms/sm3/platform.c
+        mos/platforms/sm3/platform.h
+        mos/platforms/sm3/platform_radio.h
+        mos/platforms/sm3/sdcard_pins.h
+        mos/platforms/sm3/sht_pins.h
+        mos/platforms/telosb/cc2420_pins.h
+        mos/platforms/telosb/flash.h
+        mos/platforms/telosb/hd4478_pins.h
+        mos/platforms/telosb/ledslist.h
+        mos/platforms/telosb/m25pxx_pins.h
+        mos/platforms/telosb/platform.c
+        mos/platforms/telosb/platform.h
+        mos/platforms/telosb/platform_radio.h
+        mos/platforms/telosb/sdcard_pins.h
+        mos/platforms/telosb/sht_pins.h
+        mos/platforms/testbed/adc_dac_pins.h
+        mos/platforms/testbed/flash.h
+        mos/platforms/testbed/ledslist.h
+        mos/platforms/testbed/platform.c
+        mos/platforms/testbed/platform.h
+        mos/platforms/testbed2/adc_dac_pins.h
+        mos/platforms/testbed2/flash.h
+        mos/platforms/testbed2/ledslist.h
+        mos/platforms/testbed2/platform.c
+        mos/platforms/testbed2/platform.h
+        mos/platforms/testbed2/sdcard_pins.h
+        mos/platforms/tinymcu/flash.h
+        mos/platforms/tinymcu/ledslist.h
+        mos/platforms/tinymcu/platform.c
+        mos/platforms/tinymcu/platform.h
+        mos/platforms/xm1000/cc2420_pins.h
+        mos/platforms/xm1000/flash.h
+        mos/platforms/xm1000/ledslist.h
+        mos/platforms/xm1000/m25pxx_pins.h
+        mos/platforms/xm1000/platform.c
+        mos/platforms/xm1000/platform.h
+        mos/platforms/xm1000/platform_radio.h
+        mos/platforms/xm1000/sht_pins.h
+        mos/platforms/z1/adxl_config.h
+        mos/platforms/z1/amb8420_pins.h
+        mos/platforms/z1/cc2420_pins.h
+        mos/platforms/z1/flash.h
+        mos/platforms/z1/i2c.c
+        mos/platforms/z1/i2cmaster.h
+        mos/platforms/z1/ledslist.h
+        mos/platforms/z1/m25pxx_pins.h
+        mos/platforms/z1/platform.c
+        mos/platforms/z1/platform.h
+        mos/platforms/z1/platform_accel.h
+        mos/platforms/z1/platform_radio.h
+        mos/platforms/z1/sht_pins.h
+        mos/smp/codec.c
+        mos/smp/command.c
+        mos/smp/proxy.c
+        mos/smp/smp.c
+        mos/smp/smp.h
+        mos/wmp/wmp.c
+        mos/wmp/wmp.h
+        tools/parser/ext-test/ext.c
+        tools/parser/ext-test/ext.h
+        tools/parser/tests/TunnelDataCollector.c
+        tools/pc-cloud/main.cpp
+        tools/shell/common.h
+        tools/shell/ihex.cpp
+        tools/shell/main.cpp
+        tools/web/build-contiki-example/app.c)
