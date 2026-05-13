@@ -20,8 +20,6 @@ void recvPacket(void) {
         return;
     }
 
-    PRINTF("recv src=%u seq=%u hops=%u light=%u\n", packet.src, packet.seq, packet.hops, packet.light);
-
     if (packet.hops == 0) {
         return;
     }
