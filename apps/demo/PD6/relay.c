@@ -3,6 +3,7 @@
 typedef struct {
     uint16_t src;
     uint8_t seq;
+    uint8_t hops;
     uint16_t light;
 } Packet;
 
@@ -28,6 +29,7 @@ void recvPacket(void) {
         if (sensorIds[i] == packet.src) {
             if (packet.seq > sensorSeqs[i]) {
                 sensorSeqs[i] = packet.seq;
+                packet.hops++;
                 forwardPacket = packet;
                 hasForwardPacket = true;
             }
@@ -40,6 +42,7 @@ void recvPacket(void) {
         sensorSeqs[sensorCount] = packet.seq;
         sensorCount++;
     }
+    packet.hops++;
     forwardPacket = packet;
     hasForwardPacket = true;
 }

@@ -3,6 +3,7 @@
 typedef struct {
     uint16_t src;
     uint8_t seq;
+    uint8_t hops;
     uint16_t light;
 } Packet;
 
@@ -14,6 +15,7 @@ void appMain(void) {
         Packet packet;
         packet.src = localAddress;
         packet.seq = seq;
+        packet.hops = 0;
         packet.light = lightRead();
 
         radioSend(&packet, sizeof(packet));

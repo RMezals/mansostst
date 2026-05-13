@@ -3,6 +3,7 @@
 typedef struct {
     uint16_t src;
     uint8_t seq;
+    uint8_t hops;
     uint16_t light;
 } Packet;
 
@@ -19,12 +20,16 @@ void recvPacket(void) {
         return;
     }
 
+    if (packet.hops == 0) {
+        return;
+    }
+
     int i;
     for (i = 0; i < sensorCount; i++) {
         if (sensorIds[i] == packet.src) {
             if (packet.seq > sensorSeqs[i]) {
                 sensorSeqs[i] = packet.seq;
-                PRINTF("src=%u seq=%u light=%u\n", packet.src, packet.seq, packet.light);
+                PRINTF("src=%u seq=%u hops=%u light=%u\n", packet.src, packet.seq, packet.hops, packet.light);
                 blueLedToggle();
             }
             return;
@@ -36,7 +41,7 @@ void recvPacket(void) {
         sensorSeqs[sensorCount] = packet.seq;
         sensorCount++;
     }
-    PRINTF("src=%u seq=%u light=%u\n", packet.src, packet.seq, packet.light);
+    PRINTF("src=%u seq=%u hops=%u light=%u\n", packet.src, packet.seq, packet.hops, packet.light);
     blueLedToggle();
 }
 
