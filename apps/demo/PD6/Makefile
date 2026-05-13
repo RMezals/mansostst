@@ -31,10 +31,11 @@
 # --------------------------------------------------------------------
 
 # Sources are all project source files, excluding MansOS files
-SOURCES = main.c
+# TODO: Change SOURCES to relay.c or gateway.c when flashing those node types
+SOURCES = sensor.c
 
 # Module is the name of the main module built by this makefile
-APPMOD = Blink
+APPMOD = PD6
 
 # --------------------------------------------------------------------
 # Set the key variables

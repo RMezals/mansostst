@@ -3,3 +3,4 @@
 #
 
 USE_LEDS=y
+USE_ADDRESSING=y
