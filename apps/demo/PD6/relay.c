@@ -2,40 +2,45 @@
 
 typedef struct {
     uint16_t src;
-    uint8_t  seq;
+    uint8_t seq;
     uint16_t light;
-} __attribute__((packed)) Packet;
+} Packet;
 
-#define MAX_SOURCES 8
-static uint16_t knownSrc[MAX_SOURCES];
-static uint8_t  lastSeq[MAX_SOURCES];
-static uint8_t  srcCount = 0;
+#define MAX_SENSORS 8
+uint16_t sensorIds[MAX_SENSORS];
+uint8_t sensorSeqs[MAX_SENSORS];
+int sensorCount = 0;
 
-static bool shouldForward(uint16_t src, uint8_t seq) {
-    uint8_t i;
-    for (i = 0; i < srcCount; i++) {
-        if (knownSrc[i] != src) continue;
-        if ((int8_t)(seq - lastSeq[i]) <= 0) return false;
-        lastSeq[i] = seq;
-        return true;
+void recvPacket(void) {
+    Packet packet;
+    int len = radioRecv(&packet, sizeof(packet));
+
+    if (len != sizeof(packet)) {
+        return;
     }
-    if (srcCount < MAX_SOURCES) {
-        knownSrc[srcCount] = src;
-        lastSeq[srcCount]  = seq;
-        srcCount++;
-    }
-    return true;
-}
 
-static void onRecv(void) {
-    Packet pkt;
-    if (radioRecv(&pkt, sizeof(pkt)) != sizeof(pkt)) return;
-    if (!shouldForward(pkt.src, pkt.seq)) return;
+    int i;
+    for (i = 0; i < sensorCount; i++) {
+        if (sensorIds[i] == packet.src) {
+            if (packet.seq > sensorSeqs[i]) {
+                sensorSeqs[i] = packet.seq;
+                radioSend(&packet, sizeof(packet));
+                greenLedToggle();
+            }
+            return;
+        }
+    }
+
+    if (sensorCount < MAX_SENSORS) {
+        sensorIds[sensorCount] = packet.src;
+        sensorSeqs[sensorCount] = packet.seq;
+        sensorCount++;
+    }
+    radioSend(&packet, sizeof(packet));
     greenLedToggle();
-    radioSend(&pkt, sizeof(pkt));
 }
 
 void appMain(void) {
-    radioSetReceiveHandle(onRecv);
+    radioSetReceiveHandle(recvPacket);
     radioOn();
 }

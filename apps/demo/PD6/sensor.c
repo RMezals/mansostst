@@ -2,16 +2,23 @@
 
 typedef struct {
     uint16_t src;
-    uint8_t  seq;
+    uint8_t seq;
     uint16_t light;
-} __attribute__((packed)) Packet;
+} Packet;
 
 void appMain(void) {
-    radioOn();
     uint8_t seq = 0;
-    for (;;) {
-        Packet pkt = {localAddress, seq++, lightRead()};
-        radioSend(&pkt, sizeof(pkt));
+    radioOn();
+
+    while (1) {
+        Packet packet;
+        packet.src = localAddress;
+        packet.seq = seq;
+        packet.light = lightRead();
+
+        radioSend(&packet, sizeof(packet));
+        seq++;
+
         redLedToggle();
         mdelay(3000);
     }
