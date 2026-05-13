@@ -12,9 +12,10 @@ uint8_t sensorSeqs[MAX_SENSORS];
 int sensorCount = 0;
 
 Packet forwardPacket;
-bool hasForwardPacket = false;
+volatile bool hasForwardPacket = false;
 
 void recvPacket(void) {
+    greenLedToggle();
     Packet packet;
     int len = radioRecv(&packet, sizeof(packet));
 
@@ -51,7 +52,7 @@ void appMain(void) {
         if (hasForwardPacket) {
             hasForwardPacket = false;
             radioSend(&forwardPacket, sizeof(forwardPacket));
-            greenLedToggle();
+            redLedToggle();
         }
     }
 }
