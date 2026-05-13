@@ -13,7 +13,6 @@ uint8_t sensorSeqs[MAX_SENSORS];
 int sensorCount = 0;
 
 void recvPacket(void) {
-    blueLedToggle();
     Packet packet;
     int len = radioRecv(&packet, sizeof(packet));
 
@@ -21,10 +20,13 @@ void recvPacket(void) {
         return;
     }
 
+    PRINTF("recv src=%u seq=%u hops=%u light=%u\n", packet.src, packet.seq, packet.hops, packet.light);
+
     if (packet.hops == 0) {
         return;
     }
 
+    blueLedToggle();
     int i;
     for (i = 0; i < sensorCount; i++) {
         if (sensorIds[i] == packet.src) {
