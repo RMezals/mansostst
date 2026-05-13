@@ -11,6 +11,9 @@ uint16_t sensorIds[MAX_SENSORS];
 uint8_t sensorSeqs[MAX_SENSORS];
 int sensorCount = 0;
 
+Packet forwardPacket;
+bool hasForwardPacket = false;
+
 void recvPacket(void) {
     Packet packet;
     int len = radioRecv(&packet, sizeof(packet));
@@ -24,8 +27,8 @@ void recvPacket(void) {
         if (sensorIds[i] == packet.src) {
             if (packet.seq > sensorSeqs[i]) {
                 sensorSeqs[i] = packet.seq;
-                radioSend(&packet, sizeof(packet));
-                greenLedToggle();
+                forwardPacket = packet;
+                hasForwardPacket = true;
             }
             return;
         }
@@ -36,11 +39,19 @@ void recvPacket(void) {
         sensorSeqs[sensorCount] = packet.seq;
         sensorCount++;
     }
-    radioSend(&packet, sizeof(packet));
-    greenLedToggle();
+    forwardPacket = packet;
+    hasForwardPacket = true;
 }
 
 void appMain(void) {
     radioSetReceiveHandle(recvPacket);
     radioOn();
+
+    while (1) {
+        if (hasForwardPacket) {
+            hasForwardPacket = false;
+            radioSend(&forwardPacket, sizeof(forwardPacket));
+            greenLedToggle();
+        }
+    }
 }
